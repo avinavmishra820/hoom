@@ -1,0 +1,346 @@
+SCALA PROGRAMS
+
+1)Write scala code to implement bubble sort 
+object BubbleSortExample {
+  def main(args: Array[String]): Unit = {
+    // Define an array of integers
+    val arr = Array(64, 34, 25, 12, 22, 11, 90)
+
+    println("Original array:")
+    println(arr.mkString(" "))
+
+    // Bubble Sort logic
+    for (i <- 0 until arr.length - 1) {
+      for (j <- 0 until arr.length - 1 - i) {
+        if (arr(j) > arr(j + 1)) {
+          // Swap elements
+          val temp = arr(j)
+          arr(j) = arr(j + 1)
+          arr(j + 1) = temp
+        }
+      }
+    }
+
+    println("Sorted array using Bubble Sort:")
+    println(arr.mkString(" "))
+  }
+}
+
+2)length of each word form the array 
+object WordLengths {
+  def main(args: Array[String]): Unit = {
+    val words = Array("apple", "banana", "cherry", "date")
+
+    for (word <- words) {
+      println(s"Word: $word, Length: ${word.length}")
+    }
+  }
+}
+3)books , author 
+object BooksByAuthor {
+  def main(args: Array[String]): Unit = {
+    // Collection of (author, book) pairs
+    val books = Seq(
+      ("Dr. Seuss", "How the Grinch Stole Christmas!"),
+      ("Jon Stone", "Monsters at the End of This Book"),
+      ("Dr. Seuss", "The Lorax"),
+      ("Jon Stone", "Big Bird in China"),
+      ("Dr. Seuss", "One Fish, Two Fish, Red Fish, Blue Fish")
+    )
+
+    // Group by author and count the number of books
+    val booksCountByAuthor = books.groupBy(_._1).map {
+      case (author, booksList) => (author, booksList.size)
+    }
+
+    // Print the results
+    booksCountByAuthor.foreach {
+      case (author, count) => println(s"$author published $count book(s)")
+    }
+  }
+}
+
+4) pattern matching using scala
+abstract class Notification
+
+case class Email(sender: String, title: String, body: String) extends Notification
+case class SMS(caller: String, message: String) extends Notification
+
+// Wrap the function inside an object
+object NotificationExample {
+  // Define the function that uses pattern matching
+  def showNotification(notification: Notification): String = {
+    notification match {
+      case Email(sender, title, _) =>
+        s"You got an email from $sender with title: $title"
+
+      case SMS(caller, message) =>
+        s"You got an SMS from $caller! Message: $message"
+    }
+  }
+
+  // Main method
+  def main(args: Array[String]): Unit = {
+    val email = Email("alice@example.com", "Meeting Tomorrow", "Don't forget our meeting.")
+    val sms = SMS("1234567890", "Hey, are you free this evening?")
+
+    println(showNotification(email))
+    println(showNotification(sms))
+  }
+}
+
+5)imperative quick sort 
+object ImperativeQuickSort {
+  def quickSort(arr: Array[Int], low: Int, high: Int): Unit = {
+    if (low < high) {
+      val p = partition(arr, low, high)
+      quickSort(arr, low, p - 1)
+      quickSort(arr, p + 1, high)
+    }
+  }
+
+  def partition(arr: Array[Int], low: Int, high: Int): Int = {
+    val pivot = arr(high)
+    var i = low - 1
+
+    for (j <- low until high) {
+      if (arr(j) <= pivot) {
+        i += 1
+        val temp = arr(i)
+        arr(i) = arr(j)
+        arr(j) = temp
+      }
+    }
+
+    val temp = arr(i + 1)
+    arr(i + 1) = arr(high)
+    arr(high) = temp
+
+    i + 1
+  }
+
+  def main(args: Array[String]): Unit = {
+    val arr = Array(10, 7, 8, 9, 1, 5)
+    println("Original array: " + arr.mkString(" "))
+
+    quickSort(arr, 0, arr.length - 1)
+
+    println("Sorted array: " + arr.mkString(" "))
+  }
+}
+6)capitalize words 
+
+object CapitalizeWords {
+  def capitalizeSentence(sentence: String): String = {
+    sentence
+      .split(" ")
+      .map(word => word.capitalize)
+      .mkString(" ")
+  }
+
+  def main(args: Array[String]): Unit = {
+    val input = "scala is a functional and object oriented language"
+    val result = capitalizeSentence(input)
+    println("Capitalized Sentence: " + result)
+  }
+}
+7)
+object FunctionalQuickSort {
+  def quickSort(list: List[Int]): List[Int] = list match {
+    case Nil => Nil
+    case pivot :: tail =>
+      val (less, greater) = tail.partition(_ <= pivot)
+      quickSort(less) ::: (pivot :: quickSort(greater))
+  }
+
+  def main(args: Array[String]): Unit = {
+    val numbers = List(10, 7, 8, 9, 1, 5)
+    println("Original List: " + numbers.mkString(" "))
+
+    val sorted = quickSort(numbers)
+    println("Sorted List: " + sorted.mkString(" "))
+  }
+}
+8)items names and quantity , pen , pencil 
+object ItemCollection {
+  def main(args: Array[String]): Unit = {
+    // Initial collection
+    var items = Map("Pen" -> 20, "Pencil" -> 10, "Erasor" -> 7, "Book" -> 25, "Sheet" -> 15)
+
+    // i. Display item-name and quantity
+    println("Items and Quantities:")
+    items.foreach { case (item, quantity) =>
+      println(s"$item: $quantity")
+    }
+
+    // ii. Display sum of quantity and total number of items
+    val totalQuantity = items.values.sum
+    val totalItems = items.size
+    println(s"\nTotal quantity: $totalQuantity")
+    println(s"Total number of different items: $totalItems")
+
+    // iii. Add 3 Books to the collection (update quantity)
+    items = items.updated("Book", items("Book") + 3)
+
+    // iv. Add new item “Board” with quantity 15
+    items = items + ("Board" -> 15)
+
+    // Display updated items
+    println("\nUpdated Items:")
+    items.foreach { case (item, quantity) =>
+      println(s"$item: $quantity")
+    }
+  }
+}
+9)search an element in the list 
+object ListSearch {
+  def search(numbers: List[Int], target: Int): Boolean = {
+    numbers.contains(target)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val numList = List(5, 8, 12, 20, 25)
+    val target = 12
+
+    val found = search(numList, target)
+    println(s"Is $target in the list? $found")
+  }
+}
+10) count down 
+object DownCounter {
+  def main(args: Array[String]): Unit = {
+    println("Down Counter from 10 to 1:")
+    for (i <- 10 to 1 by -1) {
+      println(i)
+    }
+  }
+}
+11)factorial item in given collection 
+object FactorialCalculator {
+
+  // Function to calculate factorial of a single number
+  def factorial(n: Int): Int = {
+    if (n == 0 || n == 1) 1
+    else n * factorial(n - 1)
+  }
+
+  // Function to calculate factorial for each item in a collection
+  def factorialItems(numbers: List[Int]): List[Int] = {
+    numbers.map(factorial)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val items = List(3, 4, 5)
+    val result = factorialItems(items)
+    println(s"Input Items: $items")
+    println(s"Factorials: $result")
+  }
+}
+
+12)items names quantity , butter, bun 
+object ItemManager {
+  def main(args: Array[String]): Unit = {
+    // Initial collection of items and quantities
+    var items = Map("Butter" -> 20, "Bun" -> 10, "Egg" -> 7, "Biscuit" -> 25, "Bread" -> 15)
+
+    // i. Display item-name and quantity
+    println("Initial Items and Quantities:")
+    items.foreach { case (item, quantity) => println(s"$item: $quantity") }
+
+    // ii. Display sum of quantity and total number of items
+    val totalQuantity = items.values.sum
+    val totalItems = items.size
+    println(s"\nTotal quantity: $totalQuantity")
+    println(s"Total number of different items: $totalItems")
+
+    // iii. Add 3 Buns to the collection (update quantity)
+    items = items.updated("Bun", items("Bun") + 3)
+
+    // iv. Add new item “Cheese” with quantity 12
+    items = items + ("Cheese" -> 12)
+
+    // Display updated items
+    println("\nUpdated Items and Quantities:")
+    items.foreach { case (item, quantity) => println(s"$item: $quantity") }
+  }
+}
+13)binary search recursion 
+object BinarySearchRecursion {
+
+  def binarySearch(list: List[Int], target: Int, low: Int, high: Int): Boolean = {
+    if (low > high) return false
+
+    val mid = (low + high) / 2
+    if (list(mid) == target) true
+    else if (target < list(mid)) binarySearch(list, target, low, mid - 1)
+    else binarySearch(list, target, mid + 1, high)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val sortedList = List(2, 4, 6, 8, 10, 12, 14, 16)
+    val target = 10
+
+    val found = binarySearch(sortedList, target, 0, sortedList.length - 1)
+    println(s"Is $target in the list? $found")
+  }
+}
+
+14)find length of each word and return the word with highest length 
+object LongestWordFinder {
+  def main(args: Array[String]): Unit = {
+    // Prompt user for input
+    println("Enter words separated by spaces:")
+    val input = scala.io.StdIn.readLine()
+
+    // Split input into words
+    val words = input.split(" ")
+
+    // Find the word with the maximum length
+    val longestWord = words.maxBy(_.length)
+    val length = longestWord.length
+
+    println(s"The word with the highest length is: ($longestWord, $length)")
+  }
+}
+
+15) f1 and f2 function 
+object FunctionAsParameter {
+
+  // Function f1: prints a message
+  def f1(): Unit = {
+    println("I am function")
+  }
+
+  // Function f2: takes a function as a parameter and calls it
+  def f2(func: () => Unit): Unit = {
+    func()
+  }
+
+  def main(args: Array[String]): Unit = {
+    // Pass f1 to f2
+    f2(f1)
+  }
+}
+
+16) use of reduce , reduceleft, reduceRight
+object ReduceExamples {
+  def main(args: Array[String]): Unit = {
+    val numbers = List(1, 2, 3, 4, 5)
+
+    println(s"Original list: $numbers")
+
+    // Using reduce to sum all elements
+    val sumReduce = numbers.reduce((a, b) => a + b)
+    println(s"Sum using reduce: $sumReduce")
+
+    // Using reduceLeft to subtract elements from left to right
+    val subReduceLeft = numbers.reduceLeft((a, b) => a - b)
+    println(s"Subtract using reduceLeft: $subReduceLeft")  // (((1 - 2) - 3) - 4) - 5 = -13
+
+    // Using reduceRight to subtract elements from right to left
+    val subReduceRight = numbers.reduceRight((a, b) => a - b)
+    println(s"Subtract using reduceRight: $subReduceRight")  // 1 - (2 - (3 - (4 - 5))) = 3
+  }
+}
+
+
