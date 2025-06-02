@@ -287,19 +287,14 @@ object BinarySearchRecursion {
 
 14)find length of each word and return the word with highest length 
 object LongestWordFinder {
-  def main(args: Array[String]): Unit = {
-    // Prompt user for input
+  def main(args: Array[String]): Unit = { 
     println("Enter words separated by spaces:")
     val input = scala.io.StdIn.readLine()
-
-    // Split input into words
     val words = input.split(" ")
-
-    // Find the word with the maximum length
+    println("\nWord Lengths:")
+    words.foreach(word => println(s"$word: ${word.length}"))
     val longestWord = words.maxBy(_.length)
-    val length = longestWord.length
-
-    println(s"The word with the highest length is: ($longestWord, $length)")
+    println(s"\nThe longest word is: $longestWord with length ${longestWord.length}")
   }
 }
 
